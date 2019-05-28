@@ -1,5 +1,6 @@
 import React from 'react'
-import Fetch from './Fetch'
+import searchArtist from './SearchArtist'
+import searchCollection from './SearchCollection'
 
 import '../css/main.css'
 
@@ -15,13 +16,15 @@ function App() {
         <div>
             <ul>
                 <li><Link to='/'>Home</Link></li>
-                <li><Link to='/fetch'>Fetch</Link></li>
+                <li><Link to='/search-artist'>Search Artists</Link></li>
+                <li><Link to='/search-collection'>Search Collections</Link></li>
             </ul>
 
             <hr/>
 
             {/* <Route exact path='/' component={Home} /> */}
-            <Route path='/fetch' component={Fetch} />
+            <Route path='/search-artist' component={searchArtist} />
+            <Route path='/search-collection' component={searchCollection} />
 
         </div>
     </BrowserRouter>
