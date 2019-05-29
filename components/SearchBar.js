@@ -7,12 +7,31 @@ function ReturnArtists(props) {
         <ul className="artist-list">
             {props.list.artObjects.map((item) => (
                 <li key={item.id}>
-                    <a href={item.links.web} target='_blank'><h3>{item.longTitle}</h3></a>
+                    <a href={item.links.web} rel="noopener noreferrer" target='_blank'>
+                        <h3>{item.longTitle}</h3>
+                    </a>
                     <h4><i>{item.principalOrFirstMaker}</i></h4>
-                    <img src={item.headerImage.url}/>
+                    <img alt={item.Title} src={item.headerImage.url}/>
                 </li>
             ))}
         </ul>
+    )
+}
+
+function SearchFunction(props) {
+    return(
+        <div>
+            <form onSubmit={ e => { props.onSubmit(e) }}>
+                <input 
+                    id='search-artist' 
+                    type='text'
+                    placeholder='Eg: Rembrandt'
+                    value={ props.input }
+                    onChange={ props.updateInput }
+                />
+                <input type='submit' value='Search'></input>
+            </form>
+        </div>
     )
 }
 
@@ -23,12 +42,14 @@ class SearchArtistQuery extends React.Component {
             error: null,
             input: '',
             isLoaded: false,
+            currentLoading: false,
             items: null,
             url: 'https://www.rijksmuseum.nl/api/en/collection?key=y6SDEyFO&format=json&q=',
             searchUrl: 'https://www.rijksmuseum.nl/api/en/collection?key=y6SDEyFO&format=json&q=',
         }
 
         this.updateInput = this.updateInput.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     updateInput(e) {
@@ -39,11 +60,12 @@ class SearchArtistQuery extends React.Component {
     }
 
     handleSubmit(e) {
+        this.setState({ currentLoading: true })
         e.preventDefault()
         this.fetchArtistQuery(this.state.input)
     }
 
-    fetchArtistQuery(artist) {
+    async fetchArtistQuery(artist) {
         const URL = encodeURI(this.state.searchUrl + artist)
         return fetch(URL)
             .then(res => res.json())
@@ -51,42 +73,54 @@ class SearchArtistQuery extends React.Component {
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        items: result
+                        items: result,
+                        currentLoading: false
                     })
                 },
                 (error) => {
                     this.setState({
                         isLoaded: true,
-                        error
+                        error,
+                        currentLoading: false
                     })
                 }
             )
     }
-    
+
     render() {
-        const { error, input, items, isLoaded, loadingNow } = this.state
-        console.log(items)
+        const { error, items, isLoaded, currentLoading } = this.state
 
         if (error) {
             return <div>Please refresh. Error: {error.message}</div>
         } else if (isLoaded) {
             return (
-                <ReturnArtists list={ items } />
+                <div>
+                    <SearchFunction 
+                        value={ this.state.input }
+                        onChange={ this.updateInput }
+                        onSubmit={ this.handleSubmit }
+                    />
+                    <ReturnArtists list={ items } />
+                </div>
+            )
+        } else if (currentLoading) {
+            return (
+                <div>
+                    <SearchFunction 
+                        value={ this.state.input }
+                        onChange={ this.updateInput }
+                        onSubmit={ this.handleSubmit }
+                    />
+                    <Loading />
+                </div>
             )
         } else {
             return (
-                <div>
-                    <form onSubmit={ e => { this.handleSubmit(e) }}>
-                        <input 
-                            id='search-artist' 
-                            type='text'
-                            placeholder='Eg: Rembrandt'
-                            value={ this.state.input }
-                            onChange={ this.updateInput }
-                        />
-                        <input type='submit' value='Search'></input>
-                    </form>
-                </div>
+                <SearchFunction 
+                    value={ this.state.input }
+                    onChange={ this.updateInput }
+                    onSubmit={ this.handleSubmit }
+                />
             )
         }
     }
