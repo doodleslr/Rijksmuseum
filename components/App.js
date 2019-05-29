@@ -1,5 +1,5 @@
 import React from 'react'
-import SearchComp from './SearchArtist'
+import SearchArtist from './SearchArtist'
 import searchCollection from './SearchCollection'
 
 import '../css/main.css'
@@ -23,7 +23,7 @@ function App() {
             <hr/>
 
             {/* <Route exact path='/' component={Home} /> */}
-            <Route path='/search-artist' component={SearchComp} />
+            <Route path='/search-artist' component={SearchArtist} />
             <Route path='/search-collection' component={searchCollection} />
         </BrowserRouter>
     )
