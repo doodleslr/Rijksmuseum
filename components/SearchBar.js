@@ -20,18 +20,16 @@ function ReturnArtists(props) {
 
 function SearchFunction(props) {
     return(
-        <div>
-            <form onSubmit={ e => { props.onSubmit(e) }}>
-                <input 
-                    id='search-artist' 
-                    type='text'
-                    placeholder='Eg: Rembrandt'
-                    value={ props.input }
-                    onChange={ props.updateInput }
-                />
-                <input type='submit' value='Search'></input>
-            </form>
-        </div>
+        <form onSubmit={ e => { props.onSubmit(e) }}>
+            <input 
+                id='search-artist' 
+                type='text'
+                placeholder='Eg: Rembrandt'
+                value={ props.input }
+                onChange={ props.updateInput }
+            />
+            <input type='submit' value='Search'></input>
+        </form>
     )
 }
 
@@ -60,8 +58,9 @@ class SearchArtistQuery extends React.Component {
     }
 
     handleSubmit(e) {
-        this.setState({ currentLoading: true })
         e.preventDefault()
+
+        this.setState({ currentLoading: true })
         this.fetchArtistQuery(this.state.input)
     }
 
@@ -94,7 +93,7 @@ class SearchArtistQuery extends React.Component {
             return <div>Please refresh. Error: {error.message}</div>
         } else if (isLoaded) {
             return (
-                <div>
+                <div className='artist-handler'>
                     <SearchFunction 
                         value={ this.state.input }
                         onChange={ this.updateInput }
@@ -105,7 +104,7 @@ class SearchArtistQuery extends React.Component {
             )
         } else if (currentLoading) {
             return (
-                <div>
+                <div className='artist-handler'>
                     <SearchFunction 
                         value={ this.state.input }
                         onChange={ this.updateInput }
@@ -116,11 +115,13 @@ class SearchArtistQuery extends React.Component {
             )
         } else {
             return (
-                <SearchFunction 
-                    value={ this.state.input }
-                    onChange={ this.updateInput }
-                    onSubmit={ this.handleSubmit }
-                />
+                <div className='artist-handler'>
+                    <SearchFunction 
+                        value={ this.state.input }
+                        onChange={ this.updateInput }
+                        onSubmit={ this.handleSubmit }
+                    />
+                </div>
             )
         }
     }
@@ -128,8 +129,6 @@ class SearchArtistQuery extends React.Component {
 
 export default function SearchBar(props){
     return (
-        <div>
-            <SearchArtistQuery />
-        </div>
+        <SearchArtistQuery />
     )
 }

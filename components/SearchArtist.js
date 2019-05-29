@@ -18,12 +18,10 @@ class SearchComponent extends React.Component {
     render() {
         const { error} = this.state
         if (error) {
-            return <div>Please refresh. Error: {error.message}</div>
+            return <p>Please refresh. Error: {error.message}</p>
         } else {
             return (
-                <div>
-                    <SearchBar />
-                </div>
+                <SearchBar />
             )
         }
     }
@@ -32,8 +30,6 @@ class SearchComponent extends React.Component {
 
 export default function SearchComp(props){
     return (
-        <div>
-            <SearchComponent />
-        </div>
+        <SearchComponent />
     )
 }

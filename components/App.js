@@ -11,24 +11,22 @@ import {
 } from 'react-router-dom'
 
 function App() {
-  return (
-    <BrowserRouter>
-        <div>
-            <ul>
-                <li><Link to='/'>Home</Link></li>
-                <li><Link to='/search-artist'>Search Artists</Link></li>
-                <li><Link to='/search-collection'>Search Collections</Link></li>
-            </ul>
-
+    return (
+        <BrowserRouter>
+            <nav>
+                <ul>
+                    <li><Link to='/'>Home</Link></li>
+                    <li><Link to='/search-artist'>Search Artists</Link></li>
+                    <li><Link to='/search-collection'>Search Collections</Link></li>
+                </ul>
+            </nav>
             <hr/>
 
             {/* <Route exact path='/' component={Home} /> */}
             <Route path='/search-artist' component={SearchComp} />
             <Route path='/search-collection' component={searchCollection} />
-
-        </div>
-    </BrowserRouter>
-  )
+        </BrowserRouter>
+    )
 }
 
 export default App;
