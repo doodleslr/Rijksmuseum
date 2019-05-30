@@ -1,23 +1,37 @@
 import React from 'react'
 import Loading from './Loading'
+import ArtistDetails from './ArtistDetails'
 
-function ReturnArtists(props) {
-    console.log(props.list.artObjects)
+import {
+    BrowserRouter,
+    Route,
+    Link
+} from 'react-router-dom'
+
+function ReturnArtists(prop) {
     return(
         <ul className="artist-list">
-            {props.list.artObjects.map((item) => (
+            {prop.list.artObjects.map((item) => (
                 <li key={item.id}>
-                    <a href={item.links.web} rel="noopener noreferrer" target='_blank'>
-                        <h3>{item.longTitle}</h3>
-                    </a>
-                    <h4><i>{item.principalOrFirstMaker}</i></h4>
-                    <img alt={item.Title} src={item.headerImage.url}/>
+                    <BrowserRouter>
+                        <h3>
+                        <Link to={{ pathname: '/artist', state: { foo: 'bar'} }}>
+                            {item.longTitle}
+                        </Link>
+                        </h3>
+                        <h4><i>{item.principalOrFirstMaker}</i></h4>
+                        <img alt={item.longTitle} src={item.headerImage.url}/>
+
+                        <Route path='/artist' render={(props) => (
+                            <ArtistDetails something='hello' {...props} />
+                        )} />
+                    </BrowserRouter>
                 </li>
             ))}
         </ul>
     )
 }
-
+{/* <Route path='/artist' component={ArtistDetails}/> */}
 function SearchFunction(props) {
     return(
         <form onSubmit={ e => { props.onSubmit(e) }}>
@@ -25,8 +39,8 @@ function SearchFunction(props) {
                 id='search-artist' 
                 type='text'
                 placeholder='Eg: Rembrandt'
-                value={ props.input }
-                onChange={ props.updateInput }
+                value={ props.value }
+                onChange={ props.onChange }
             />
             <input type='submit' value='Search'></input>
         </form>
@@ -42,10 +56,9 @@ class SearchArtistComponent extends React.Component {
             isLoaded: false,
             currentLoading: false,
             items: null,
-            url: 'https://www.rijksmuseum.nl/api/en/collection?key=y6SDEyFO&format=json&q=',
-            searchUrl: 'https://www.rijksmuseum.nl/api/en/collection?key=y6SDEyFO&format=json&q=',
+            url: 'https://www.rijksmuseum.nl/api/en/collection?key=y6SDEyFO&format=json&imgonly=True&q=',
+            searchUrl: 'https://www.rijksmuseum.nl/api/en/collection?key=y6SDEyFO&format=json&imgonly=True&q=',
         }
-
         this.updateInput = this.updateInput.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
@@ -88,7 +101,6 @@ class SearchArtistComponent extends React.Component {
 
     render() {
         const { error, items, isLoaded, currentLoading } = this.state
-
         if (error) {
             return <div>Please refresh. Error: {error.message}</div>
         } else if (isLoaded) {
