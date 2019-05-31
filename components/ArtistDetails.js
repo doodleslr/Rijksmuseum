@@ -10,18 +10,24 @@ import {
 class ArtistDetails extends React.Component {
     constructor(props) {
         super(props)
+
+        this.state ={
+            error: null,
+            artist: this.props.artist,
+            artistID: this.props.artistID,
+            isLoaded: false,
+            items: null,
+        }
     }
+    //SEARCH COLLECTION AND MATCH ARTIST ITEM ID WITH OBJECT NUMBER TO GET SPECIFIC REQUEST
+
+    // https://www.rijksmuseum.nl/api/nl/collection/[INSERT_artistID_HERE]/tiles?key=y6SDEyFO&format=json
+    // http://rijksmuseum.github.io/demos/
+    // http://rijksmuseum.github.io/
 
     componentDidMount() {
-        console.log(this.props)
+        console.log('DIFFERENT DOCUMENT ArtistDetails.js', this.props)
     }
-
-    // handleSubmit(e) {
-    //     e.preventDefault()
-
-    //     this.setState({ currentLoading: true })
-    //     this.fetchArtistQuery(this.state.input)
-    // }
 
     // async fetchArtistQuery(artist) {
     //     const URL = encodeURI(this.state.searchUrl + artist)
@@ -46,9 +52,10 @@ class ArtistDetails extends React.Component {
     // }
 
     render() {
+        const { error, artist, artistID, isLoaded, items } = this.state
         return (
             <div>
-                <p>Hello</p>
+                <p>hello {artist}, {artistID}</p>
             </div>
         )
         // if (error) {
