@@ -8,22 +8,20 @@ import {
     Link
 } from 'react-router-dom'
 
-function ReturnArtists(prop) {
+function ReturnArtists(props) {
     return(
         <ul className="artist-list">
-            {prop.list.artObjects.map((item) => (
+            {props.list.artObjects.map((item) => (
                 <li key={item.id}>
                     <BrowserRouter>
                         <h3>
-                        <Link to={{ pathname: '/artist', state: { foo: 'bar'} }}>
-                            {item.longTitle}
-                        </Link>
+                        <Link to='/artist'>{item.longTitle}</Link>
                         </h3>
                         <h4><i>{item.principalOrFirstMaker}</i></h4>
                         <img alt={item.longTitle} src={item.headerImage.url}/>
 
                         <Route path='/artist' render={(props) => (
-                            <ArtistDetails something='hello' {...props} />
+                            <ArtistDetails artist={item.principalOrFirstMaker} {...props} />
                         )} />
                     </BrowserRouter>
                 </li>
@@ -31,7 +29,7 @@ function ReturnArtists(prop) {
         </ul>
     )
 }
-{/* <Route path='/artist' component={ArtistDetails}/> */}
+
 function SearchFunction(props) {
     return(
         <form onSubmit={ e => { props.onSubmit(e) }}>
@@ -47,7 +45,7 @@ function SearchFunction(props) {
     )
 }
 
-class SearchArtistComponent extends React.Component {
+class SearchArtist extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -139,8 +137,4 @@ class SearchArtistComponent extends React.Component {
     }
 }
 
-export default function SearchArtist(props){
-    return (
-        <SearchArtistComponent />
-    )
-}
+export default SearchArtist

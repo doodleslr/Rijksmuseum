@@ -6,9 +6,8 @@ import {
     Route,
     Link
 } from 'react-router-dom'
-import { REFUSED } from 'dns';
 
-class ArtistDetailsComp extends React.Component {
+class ArtistDetails extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -47,7 +46,6 @@ class ArtistDetailsComp extends React.Component {
     // }
 
     render() {
-        console.log(this.props)
         return (
             <div>
                 <p>Hello</p>
@@ -91,8 +89,4 @@ class ArtistDetailsComp extends React.Component {
     }
 }
 
-export default function ArtistDetails(props){
-    return (
-        <ArtistDetailsComp />
-    )
-}
+export default ArtistDetails
