@@ -1,0 +1,63 @@
+//text colours
+$gold: #f28c26;
+$pink: #d966ff;
+$darkblu: #00001a;
+
+//font types
+
+// @font-face {
+// 	font-family: VCR; 
+// 	src: url("vcr.ttf");
+// }
+// @mixin main {
+//     font-family: 'Quicksand', sans-serif;
+// }
+// @mixin title {
+//     font-family:  'VCR', sans-serif;
+// }
+
+//media queries
+$xtra-large:"screen and (min-width: 992px)";
+$large:"(min-width: 768px) and (max-width: 991px)";
+$medium:"(min-width: 600px) and (max-width: 767px)";
+$small:"(min-width: 480px) and (max-width: 599px)";
+$xtra-small:"only screen and (max-width: 479px)";
+
+@mixin XL {
+    @media #{$xtra-large} {
+        @content;
+    }
+}
+@mixin LG {
+    @media #{$large} {
+        @content;
+    }
+}
+@mixin MD {
+    @media #{$medium} {
+        @content;
+    }
+}
+@mixin SM {
+    @media #{$small} {
+        @content;
+    }
+}
+@mixin XS {
+    @media #{$xtra-small} {
+        @content;
+    }
+}
+
+//additional mixins
+@mixin borderRadius {
+    -webkit-border-radius: 5px 15px 5px 15px;
+    -moz-border-radius: 5px 15px 5px 15px;
+    border-radius: 5px 15px 5px 15px;
+}
+
+@mixin boxShadow {
+    -moz-box-shadow: inset 0px 0px 20px 0px  rgba(230, 230, 230, 0.4);
+    -webkit-box-shadow: inset 0px 0px 20px 0px  rgba(230, 230, 230, 0.4);
+    box-shadow: inset 0px 0px 20px 0px  rgba(230, 230, 230, 0.4);
+}

@@ -2,7 +2,7 @@ import React from 'react'
 import SearchArtist from './SearchArtist'
 import ArtistDetails from './ArtistDetails'
 
-import '../css/main.css'
+import '../css/css/main.css'
 
 import {
     BrowserRouter,

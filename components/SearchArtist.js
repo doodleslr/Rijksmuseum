@@ -19,7 +19,6 @@ function ReturnArtists(props) {
                     path='/artist/:artistID' 
                     render={(prop) => (
                         <ArtistDetails 
-                            artist={props.browsingArtist}
                             artistID={props.artistID}
                             {...prop} />
                     )} 

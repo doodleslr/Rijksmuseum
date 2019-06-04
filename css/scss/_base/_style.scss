@@ -1,0 +1,13 @@
+@import "_base/_bits";
+
+* { box-sizing:border-box; margin:0; padding:0; }
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+body {
+    align-content:center;
+    background-color: #fff;
+    justify-items:center;
+}

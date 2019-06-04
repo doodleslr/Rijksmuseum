@@ -1,32 +1,25 @@
 import React from 'react'
 import Loading from './Loading'
 
-import {
-    BrowserRouter,
-    Route,
-    Link
-} from 'react-router-dom'
-
 class ArtistDetails extends React.Component {
     constructor(props) {
         super(props)
-
+        this.canvasRef = React.createRef()
         this.state ={
             error: null,
-            artist: this.props.artist,
             artistID: this.props.artistID,
-            isLoaded: false,
+            itemLoaded: false,
             items: null,
-            tiles: null,
+            initTileGame: false,
+            canvasHeight: null,
+            canvasWidth: null,
+            once: false,
             url:    'https://www.rijksmuseum.nl/api/en/collection?key=y6SDEyFO&format=json&imgonly=True&q=',
             tileUrl:'https://www.rijksmuseum.nl/api/en/collection/Q/tiles?key=y6SDEyFO&format=json',
         }
-    }
-    //SEARCH COLLECTION AND MATCH ARTIST ITEM ID WITH OBJECT NUMBER TO GET SPECIFIC REQUEST
 
-    // https://www.rijksmuseum.nl/api/nl/collection/[INSERT_artistID_HERE]/tiles?key=y6SDEyFO&format=json
-    // http://rijksmuseum.github.io/demos/
-    // http://rijksmuseum.github.io/
+        this.handleCanvasSize = this.handleCanvasSize.bind(this)
+    }
 
     async fetchQuery(result) {
         const URL = encodeURI(result)
@@ -35,32 +28,13 @@ class ArtistDetails extends React.Component {
             .then(
                 (result) => {
                     this.setState({
-                        isLoaded: true,
+                        itemLoaded: true,
                         items: result,
                     })
                 },
                 (error) => {
                     this.setState({
-                        isLoaded: true,
-                        error,
-                    })
-                }
-            )
-    }
-    async fetchTiles(result) {
-        const URL = encodeURI(result)
-        return fetch(URL)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        isLoaded: true,
-                        tiles: result,
-                    })
-                },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
+                        itemLoaded: true,
                         error,
                     })
                 }
@@ -69,29 +43,69 @@ class ArtistDetails extends React.Component {
 
     componentDidMount() {
         var result = this.state.url + this.state.artistID
-        var tiles = this.state.tileUrl.replace('Q', this.state.artistID)
         this.fetchQuery(result)
-        this.fetchTiles(tiles)
+    }
+
+    handleCanvasSize(imageRef) {
+        if(!this.state.once) {
+            let height
+            let width
+            setTimeout(() => {
+                console.log(imageRef)
+                height = imageRef.height
+                width = imageRef.width
+                this.setState({
+                    canvasHeight: height,
+                    canvasWidth: width,
+                    once: true
+                })
+            }, 2000)
+        }
     }
 
     render() {
-        const { error, isLoaded, items, tiles } = this.state
-        console.log(items, tiles)
+        const { error, items, initTileGame, itemLoaded, canvasHeight, canvasWidth } = this.state
+        console.log(items)
         let returnItem
+
         if (error) {
             returnItem = ( 
                 <div>Please refresh. Error: {error.message}</div>
             )
-        } else if (isLoaded) {
+        } else if (itemLoaded) {
             let item
             items.artObjects.map((object) => {
                 item = object
             })
+
             returnItem = (
                 <div className='artist-details'>
                     <h3>{item.longTitle}</h3>
                     <h4><i>{item.principalOrFirstMaker}</i></h4>
-                    <img alt={item.longTitle} src={item.headerImage.url}/>
+                    {initTileGame ? (
+                        <canvas 
+                            id='canvas'
+                            height={canvasHeight}
+                            width={canvasWidth}>
+                        </canvas>
+                    ) : (
+                        <div>
+                            <img 
+                                id='imgCanvasRef'
+                                alt={item.longTitle} 
+                                src={item.webImage.url}
+                                ref={(imageRef) => this.handleCanvasSize(imageRef)}
+                                onClick={() => 
+                                    this.setState({ 
+                                        initTileGame: true,
+                                    })
+                                }>
+                            </img>
+                            <div className='img-overlay'>
+                                <p>Click to play an image puzzle game</p>
+                            </div>
+                        </div>
+                    )}                    
                 </div>
             )
         } else {
@@ -99,6 +113,7 @@ class ArtistDetails extends React.Component {
                 <Loading />
             )
         }
+
         return ( returnItem )
     }
 }
