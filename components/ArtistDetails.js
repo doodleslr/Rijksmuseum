@@ -17,6 +17,9 @@ class ArtistDetails extends React.Component {
             artistID: this.props.artistID,
             isLoaded: false,
             items: null,
+            tiles: null,
+            url:    'https://www.rijksmuseum.nl/api/en/collection?key=y6SDEyFO&format=json&imgonly=True&q=',
+            tileUrl:'https://www.rijksmuseum.nl/api/en/collection/Q/tiles?key=y6SDEyFO&format=json',
         }
     }
     //SEARCH COLLECTION AND MATCH ARTIST ITEM ID WITH OBJECT NUMBER TO GET SPECIFIC REQUEST
@@ -25,74 +28,78 @@ class ArtistDetails extends React.Component {
     // http://rijksmuseum.github.io/demos/
     // http://rijksmuseum.github.io/
 
-    componentDidMount() {
-        console.log('DIFFERENT DOCUMENT ArtistDetails.js', this.props)
+    async fetchQuery(result) {
+        const URL = encodeURI(result)
+        return fetch(URL)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        items: result,
+                    })
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error,
+                    })
+                }
+            )
+    }
+    async fetchTiles(result) {
+        const URL = encodeURI(result)
+        return fetch(URL)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        tiles: result,
+                    })
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error,
+                    })
+                }
+            )
     }
 
-    // async fetchArtistQuery(artist) {
-    //     const URL = encodeURI(this.state.searchUrl + artist)
-    //     return fetch(URL)
-    //         .then(res => res.json())
-    //         .then(
-    //             (result) => {
-    //                 this.setState({
-    //                     isLoaded: true,
-    //                     items: result,
-    //                     currentLoading: false
-    //                 })
-    //             },
-    //             (error) => {
-    //                 this.setState({
-    //                     isLoaded: true,
-    //                     error,
-    //                     currentLoading: false
-    //                 })
-    //             }
-    //         )
-    // }
+    componentDidMount() {
+        var result = this.state.url + this.state.artistID
+        var tiles = this.state.tileUrl.replace('Q', this.state.artistID)
+        this.fetchQuery(result)
+        this.fetchTiles(tiles)
+    }
 
     render() {
-        const { error, artist, artistID, isLoaded, items } = this.state
-        return (
-            <div>
-                <p>hello {artist}, {artistID}</p>
-            </div>
-        )
-        // if (error) {
-        //     return <div>Please refresh. Error: {error.message}</div>
-        // } else if (isLoaded) {
-        //     return (
-        //         <div className='artist-handler'>
-        //             <SearchFunction 
-        //                 value={ this.state.input }
-        //                 onChange={ this.updateInput }
-        //                 onSubmit={ this.handleSubmit }
-        //             />
-        //             <ReturnArtists list={ items } />
-        //         </div>
-        //     )
-        // } else if (currentLoading) {
-        //     return (
-        //         <div className='artist-handler'>
-        //             <SearchFunction 
-        //                 value={ this.state.input }
-        //                 onChange={ this.updateInput }
-        //                 onSubmit={ this.handleSubmit }
-        //             />
-        //             <Loading />
-        //         </div>
-        //     )
-        // } else {
-        //     return (
-        //         <div className='artist-handler'>
-        //             <SearchFunction 
-        //                 value={ this.state.input }
-        //                 onChange={ this.updateInput }
-        //                 onSubmit={ this.handleSubmit }
-        //             />
-        //         </div>
-        //     )
-        // }
+        const { error, isLoaded, items, tiles } = this.state
+        console.log(items, tiles)
+        let returnItem
+        if (error) {
+            returnItem = ( 
+                <div>Please refresh. Error: {error.message}</div>
+            )
+        } else if (isLoaded) {
+            let item
+            items.artObjects.map((object) => {
+                item = object
+            })
+            returnItem = (
+                <div className='artist-details'>
+                    <h3>{item.longTitle}</h3>
+                    <h4><i>{item.principalOrFirstMaker}</i></h4>
+                    <img alt={item.longTitle} src={item.headerImage.url}/>
+                </div>
+            )
+        } else {
+            returnItem = (
+                <Loading />
+            )
+        }
+        return ( returnItem )
     }
 }
 

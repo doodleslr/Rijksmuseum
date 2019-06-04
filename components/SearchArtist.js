@@ -9,9 +9,9 @@ import {
 } from 'react-router-dom'
 
 function ReturnArtists(props) {
-    console.log(props)
+    let returnItem;
     if(props.browsingArtist) {
-        return(
+        returnItem = (
             <BrowserRouter>
                 <h3><Link to='/artist' onClick={() => props.toggleBrowsing()}>Return to search results</Link></h3>
 
@@ -25,9 +25,9 @@ function ReturnArtists(props) {
                     )} 
                 />
             </BrowserRouter>
-        )
+        )          
     } else {
-        return(
+        returnItem = (
             <ul className="artist-list">
                 {props.list.artObjects.map((item) => (
                     <li key={item.id}>
@@ -35,22 +35,15 @@ function ReturnArtists(props) {
                             <h3><Link to='/artist/:artistID' onClick={() => props.toggleBrowsing(item.principalOrFirstMaker, item.objectNumber)}>{item.longTitle}</Link></h3>
                             <h4><i>{item.principalOrFirstMaker}</i></h4>
                             <img alt={item.longTitle} src={item.headerImage.url}/>
-    
-                            <Route 
-                                path='/artist' 
-                                render={(props) => (
-                                    <ArtistDetails 
-                                        artist={item.principalOrFirstMaker}
-                                        artistID={item.objectNumber}
-                                        {...props} />
-                                )} 
-                            />
+
                         </BrowserRouter>
                     </li>
                 ))}
             </ul>
         )
     }
+
+    return(returnItem)
 }
 
 function SearchFunction(props) {
@@ -80,7 +73,6 @@ class SearchArtist extends React.Component {
             artistID: '',
             items: null,
             url: 'https://www.rijksmuseum.nl/api/en/collection?key=y6SDEyFO&format=json&imgonly=True&q=',
-            searchUrl: 'https://www.rijksmuseum.nl/api/en/collection?key=y6SDEyFO&format=json&imgonly=True&q=',
         }
         this.updateInput = this.updateInput.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -114,7 +106,7 @@ class SearchArtist extends React.Component {
     }
 
     async fetchArtistQuery(artist) {
-        const URL = encodeURI(this.state.searchUrl + artist)
+        const URL = encodeURI(this.state.url + artist)
         return fetch(URL)
             .then(res => res.json())
             .then(
@@ -137,10 +129,11 @@ class SearchArtist extends React.Component {
 
     render() {
         const { error, items, isLoaded, currentLoading, browsingArtist, artistID } = this.state
+        let returnItem 
         if (error) {
-            return <div>Please refresh. Error: {error.message}</div>
+            returnItem = ( <div>Please refresh. Error: {error.message}</div> )
         } else if (isLoaded) {
-            return (
+            returnItem = (
                 <div className='artist-handler'>
                     <SearchFunction 
                         value={ this.state.input }
@@ -156,7 +149,7 @@ class SearchArtist extends React.Component {
                 </div>
             )
         } else if (currentLoading) {
-            return (
+            returnItem = (
                 <div className='artist-handler'>
                     <SearchFunction 
                         value={ this.state.input }
@@ -167,7 +160,7 @@ class SearchArtist extends React.Component {
                 </div>
             )
         } else {
-            return (
+            returnItem = (
                 <div className='artist-handler'>
                     <SearchFunction 
                         value={ this.state.input }
@@ -177,6 +170,8 @@ class SearchArtist extends React.Component {
                 </div>
             )
         }
+
+        return ( returnItem )
     }
 }
 
