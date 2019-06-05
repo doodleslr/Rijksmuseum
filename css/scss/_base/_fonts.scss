@@ -1,5 +1,23 @@
-@import "_base/_bits";
+@import "_base/_bits.scss";
 
 body {
-    // color: $darkblu;
+    color: $charcoal;
+    @include main;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+h2 {
+    font-weight: 600;
+}
+h4 {
+    font-weight: initial;
+    &:hover {
+        @include hover;
+    }
+}
+input {
+    @include main;
+    font-weight: bold;
 }

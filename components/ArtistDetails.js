@@ -77,11 +77,15 @@ class ArtistDetails extends React.Component {
             items.artObjects.map((object) => {
                 item = object
             })
+            let year
+            year = item.longTitle.slice(-4)
 
             returnItem = (
                 <div className='artist-details'>
-                    <h3>{item.longTitle}</h3>
-                    <h4><i>{item.principalOrFirstMaker}</i></h4>
+                    <h2><i>{item.principalOrFirstMaker}</i></h2>
+                    <h4>{item.title}</h4>
+                    <h5>{year}</h5>
+
                     {initTileGame ? (
                         <canvas 
                             id='canvas'

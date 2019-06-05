@@ -1,20 +1,12 @@
 //text colours
-$gold: #f28c26;
-$pink: #d966ff;
-$darkblu: #00001a;
+$charcoal: #161c20;
+$lightblu: #95a9b7;
 
 //font types
 
-// @font-face {
-// 	font-family: VCR; 
-// 	src: url("vcr.ttf");
-// }
-// @mixin main {
-//     font-family: 'Quicksand', sans-serif;
-// }
-// @mixin title {
-//     font-family:  'VCR', sans-serif;
-// }
+@mixin main {
+    font-family: 'Playfair Display', serif;
+}
 
 //media queries
 $xtra-large:"screen and (min-width: 992px)";
@@ -60,4 +52,16 @@ $xtra-small:"only screen and (max-width: 479px)";
     -moz-box-shadow: inset 0px 0px 20px 0px  rgba(230, 230, 230, 0.4);
     -webkit-box-shadow: inset 0px 0px 20px 0px  rgba(230, 230, 230, 0.4);
     box-shadow: inset 0px 0px 20px 0px  rgba(230, 230, 230, 0.4);
+}
+
+@mixin hover {
+    -moz-transform: translateY(-1px);
+    -ms-transform: translateY(-1px);
+    -o-transform: translateY(-1px);
+    -webkit-transform: translateY(-1px);
+    transform: translateY(-1px);
+    text-shadow: 0px 0px 0px $charcoal;
+    -webkit-text-shadow: 0px 0px 0px $charcoal;
+    -khtml-text-shadow: 0px 0px 0px $charcoal;
+    -moz-text-shadow: 0px 0px 0px $charcoal;
 }

@@ -9,7 +9,9 @@ import {
 } from 'react-router-dom'
 
 function ReturnArtists(props) {
-    let returnItem;
+    let returnItem
+    let year
+    
     if(props.browsingArtist) {
         returnItem = (
             <BrowserRouter>
@@ -29,12 +31,13 @@ function ReturnArtists(props) {
         returnItem = (
             <ul className="artist-list">
                 {props.list.artObjects.map((item) => (
+                    year = item.longTitle.slice(-4),
                     <li key={item.id}>
                         <BrowserRouter>
-                            <h3><Link to='/artist/:artistID' onClick={() => props.toggleBrowsing(item.principalOrFirstMaker, item.objectNumber)}>{item.longTitle}</Link></h3>
-                            <h4><i>{item.principalOrFirstMaker}</i></h4>
                             <img alt={item.longTitle} src={item.headerImage.url}/>
-
+                            <h2><i>{item.principalOrFirstMaker}</i></h2>
+                            <h4><Link to='/artist/:artistID' onClick={() => props.toggleBrowsing(item.principalOrFirstMaker, item.objectNumber)}>{item.title}</Link></h4>
+                            <h5>{year}</h5>
                         </BrowserRouter>
                     </li>
                 ))}
