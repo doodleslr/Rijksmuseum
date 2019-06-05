@@ -82,10 +82,6 @@ class ArtistDetails extends React.Component {
 
             returnItem = (
                 <div className='artist-details'>
-                    <h2><i>{item.principalOrFirstMaker}</i></h2>
-                    <h4>{item.title}</h4>
-                    <h5>{year}</h5>
-
                     {initTileGame ? (
                         <canvas 
                             id='canvas'
@@ -93,23 +89,28 @@ class ArtistDetails extends React.Component {
                             width={canvasWidth}>
                         </canvas>
                     ) : (
-                        <div>
+                        <div className="puzzle-prompt">
                             <img 
                                 id='imgCanvasRef'
                                 alt={item.longTitle} 
                                 src={item.webImage.url}
-                                ref={(imageRef) => this.handleCanvasSize(imageRef)}
+                                ref={(imageRef) => this.handleCanvasSize(imageRef)}>
+                            </img>
+                            <div 
+                                className='img-overlay'
                                 onClick={() => 
                                     this.setState({ 
                                         initTileGame: true,
                                     })
                                 }>
-                            </img>
-                            <div className='img-overlay'>
-                                <p>Click to play an image puzzle game</p>
+                                <h5>Click to play an image puzzle game</h5>
                             </div>
                         </div>
-                    )}                    
+                    )}
+
+                    <h2><i>{item.principalOrFirstMaker}</i></h2>
+                    <h4>{item.title}</h4>
+                    <h4>{year}</h4>
                 </div>
             )
         } else {

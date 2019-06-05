@@ -4,10 +4,12 @@ export default class Loading extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-        text: 'Loading'
+        text: 'Loading',
+        id: 'loading'
         };
     }
     componentDidMount() {
+        this.setState({ id: 'loading' })
         const stopper = this.state.text + '...';
         this.interval = window.setInterval(() => {
         this.state.text === stopper
@@ -16,13 +18,14 @@ export default class Loading extends React.Component {
         }, 300)
     }
     componentWillUnmount() {
+        this.setState({ id: '' })
         window.clearInterval(this.interval)
     }
     render() {
         return (
-        <p>
-            {this.state.text}
-        </p>
+        <div id={this.state.id}>
+            <p>{this.state.text}</p>
+        </div>
         )
     }
 }

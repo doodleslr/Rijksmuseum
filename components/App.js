@@ -15,11 +15,11 @@ function ReturnSplash(props) {
     console.log(props)
     let returnItem
     let year
-    
+
     if(props.browsingArtist) {
         returnItem = (
             <BrowserRouter>
-                <h3><Link to='/' onClick={() => props.toggleBrowsing()}>Return to Home</Link></h3>
+                <h3 id="return"><Link to='/' onClick={() => props.toggleBrowsing()}>Return to Home</Link></h3>
 
                 <Route 
                     path='/artist/:artistID' 
@@ -39,10 +39,12 @@ function ReturnSplash(props) {
                     year = item.longTitle.slice(-4),
                     <li key={item.id}>
                         <BrowserRouter>
-                            <img alt={item.longTitle} src={item.headerImage.url}/>
-                            <h2>{item.principalOrFirstMaker}</h2>
-                            <h4><Link to='/artist/:artistID' onClick={() => props.toggleBrowsing(item.principalOrFirstMaker, item.objectNumber)}>{item.title}</Link></h4>
-                            <h5>{year}</h5>
+                            <Link to='/artist/:artistID' onClick={() => props.toggleBrowsing(item.principalOrFirstMaker, item.objectNumber)}>
+                                <img alt={item.longTitle} src={item.headerImage.url}/>
+                                <h2>{item.principalOrFirstMaker}</h2>
+                                <h4>{item.title}</h4>
+                                <h4>{year}</h4>
+                            </Link>
                         </BrowserRouter>
                     </li>
                 ))}
@@ -140,7 +142,7 @@ function App() {
                     <li><Link to='/search-artist'>Search Artists</Link></li>
                 </ul>
             </nav>
-            <hr/>
+            
 
             <Route exact path='/' component={Home} />
             <Route path='/search-artist' component={SearchArtist} />

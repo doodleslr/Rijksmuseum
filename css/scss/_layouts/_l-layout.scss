@@ -1,17 +1,32 @@
 @import "_base/_bits";
 
+#root {
+    display: flex;
+    justify-content: center;
+}
+
 #canvas { 
     image-rendering: pixelated; 
 }
-// .img-overlay {
-
-// }
 nav {
+    padding-top: 50px;
+}
+.home-handler, .artist-handler {
+    margin-left: 145px;
+    margin-bottom: 30px;
+    width: 100%;
+    padding-top: 50px;
+    min-height: 200px;
+}
+
+nav {
+    position: fixed;
+    left: 0;
     ul {
-        margin: 20px;
         list-style-type: none;
+        margin: 0px 20px;
         li {
-            margin: 20px 10px;
+            margin-bottom: 20px;
             a {
                 display: inline-block;
                 &:hover {
@@ -31,12 +46,13 @@ nav {
 }
 
 form {
-    margin: 20px;
+    margin-left: 20px;
     #search-artist, input[type=submit] {
         border-style: none;
         background-color: white;
-        margin: 10px 0px;
         display: block;
+        margin-bottom: 20px;
+        height: 21px;
     }
     #search-artist {
         border-bottom: solid 1px $charcoal;
@@ -51,20 +67,69 @@ form {
     }
 }
 
-.home-handler, .artist-handler {
-    max-width: 1200px;
-    justify-content: center;
-    align-items: flex-start;
-}
 .home-list, .artist-list {
-    margin: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     list-style-type: none;
     li {
-        margin: 20px 10px;
-        h2, h4 {
-            max-width: 450px;
+        &:hover {
+            @include hover;
+        }
+        margin: 20px;
+        max-width: 450px;
+        display: flex;
+        flex-direction: column;
+        img {
+            align-self: center;
+        }
+        h2 {
+            margin: 10px 0px;
+            display: block;
+            width: inherit;
         }
     }
+}
+
+.artist-details {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    .puzzle-prompt {
+        position: relative;
+        max-width: 450px;
+        img {
+            display: block;
+        }
+        .img-overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            transition: 0.5s ease;
+            background-color: rgba(255, 255, 255, 0.7);
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+    h5 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    h2 {
+        margin: 10px 0px;
+    }
+}
+
+#return {
+    margin: 10px 0px 10px 20px;
 }
 
 img {

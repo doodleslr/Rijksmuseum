@@ -15,7 +15,7 @@ function ReturnArtists(props) {
     if(props.browsingArtist) {
         returnItem = (
             <BrowserRouter>
-                <h3><Link to='/artist' onClick={() => props.toggleBrowsing()}>Return to search results</Link></h3>
+                <h3 id="return"><Link to='/artist' onClick={() => props.toggleBrowsing()}>Return to search results</Link></h3>
 
                 <Route 
                     path='/artist/:artistID' 
@@ -34,10 +34,12 @@ function ReturnArtists(props) {
                     year = item.longTitle.slice(-4),
                     <li key={item.id}>
                         <BrowserRouter>
-                            <img alt={item.longTitle} src={item.headerImage.url}/>
-                            <h2><i>{item.principalOrFirstMaker}</i></h2>
-                            <h4><Link to='/artist/:artistID' onClick={() => props.toggleBrowsing(item.principalOrFirstMaker, item.objectNumber)}>{item.title}</Link></h4>
-                            <h5>{year}</h5>
+                            <Link to='/artist/:artistID' onClick={() => props.toggleBrowsing(item.principalOrFirstMaker, item.objectNumber)}>
+                                <img alt={item.longTitle} src={item.headerImage.url}/>
+                                <h2><i>{item.principalOrFirstMaker}</i></h2>
+                                <h4>{item.title}</h4>
+                                <h4>{year}</h4>
+                            </Link>
                         </BrowserRouter>
                     </li>
                 ))}

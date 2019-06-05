@@ -6,8 +6,45 @@
     display: none; 
 }
 
+nav {
+    border-right: 1px solid $charcoal;
+    height: 100%;
+    width: 145px;
+}
+
 body {
     align-content:center;
     background-color: #fff;
     justify-items:center;
+}
+
+#loading {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    background-color: rgba(255, 255, 255, 0.7);
+    p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    .hide {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+img {
+    @include boxShadow;
 }

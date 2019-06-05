@@ -6,10 +6,46 @@
 ::-webkit-scrollbar {
   display: none; }
 
+nav {
+  border-right: 1px solid #161c20;
+  height: 100%;
+  width: 145px; }
+
 body {
   align-content: center;
   background-color: #fff;
   justify-items: center; }
+
+#loading {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+  background-color: rgba(255, 255, 255, 0.7); }
+  #loading p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center; }
+  #loading .hide {
+    opacity: 0;
+    pointer-events: none; }
+
+img {
+  -o-box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 10px 20px rgba(166, 173, 201, 0.2);
+  -ms-box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 10px 20px rgba(166, 173, 201, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 10px 20px rgba(166, 173, 201, 0.2);
+  -webkit-box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 10px 20px rgba(166, 173, 201, 0.2);
+  box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 10px 20px rgba(166, 173, 201, 0.2); }
 
 body {
   color: #161c20;
@@ -20,53 +56,70 @@ a {
   text-decoration: none; }
 
 h2 {
-  font-weight: 600; }
+  font-weight: 100; }
 
 h4 {
-  font-weight: initial; }
-  h4:hover {
-    -moz-transform: translateY(-1px);
-    -ms-transform: translateY(-1px);
-    -o-transform: translateY(-1px);
-    -webkit-transform: translateY(-1px);
-    transform: translateY(-1px);
-    text-shadow: 0px 0px 0px #161c20;
-    -webkit-text-shadow: 0px 0px 0px #161c20;
-    -khtml-text-shadow: 0px 0px 0px #161c20;
-    -moz-text-shadow: 0px 0px 0px #161c20; }
+  font-weight: 600; }
+  h4:nth-child(4) {
+    font-weight: 100; }
+
+h5 {
+  font-style: italic;
+  font-weight: bold; }
 
 input {
   font-family: 'Playfair Display', serif;
   font-weight: bold; }
 
+#return {
+  font-weight: 100; }
+
+#root {
+  display: flex;
+  justify-content: center; }
+
 #canvas {
   image-rendering: pixelated; }
 
-nav ul {
-  margin: 20px;
-  list-style-type: none; }
-  nav ul li {
-    margin: 20px 10px; }
-    nav ul li a {
-      display: inline-block; }
-      nav ul li a:hover {
-        -moz-transform: translateY(-1px);
-        -ms-transform: translateY(-1px);
-        -o-transform: translateY(-1px);
-        -webkit-transform: translateY(-1px);
-        transform: translateY(-1px);
-        text-shadow: 0px 0px 0px #161c20;
-        -webkit-text-shadow: 0px 0px 0px #161c20;
-        -khtml-text-shadow: 0px 0px 0px #161c20;
-        -moz-text-shadow: 0px 0px 0px #161c20; }
+nav {
+  padding-top: 50px; }
+
+.home-handler, .artist-handler {
+  margin-left: 145px;
+  margin-bottom: 30px;
+  width: 100%;
+  padding-top: 50px;
+  min-height: 200px; }
+
+nav {
+  position: fixed;
+  left: 0; }
+  nav ul {
+    list-style-type: none;
+    margin: 0px 20px; }
+    nav ul li {
+      margin-bottom: 20px; }
+      nav ul li a {
+        display: inline-block; }
+        nav ul li a:hover {
+          -moz-transform: translateY(-1px);
+          -ms-transform: translateY(-1px);
+          -o-transform: translateY(-1px);
+          -webkit-transform: translateY(-1px);
+          transform: translateY(-1px);
+          text-shadow: 0px 0px 0px #161c20;
+          -webkit-text-shadow: 0px 0px 0px #161c20;
+          -khtml-text-shadow: 0px 0px 0px #161c20;
+          -moz-text-shadow: 0px 0px 0px #161c20; }
 
 form {
-  margin: 20px; }
+  margin-left: 20px; }
   form #search-artist, form input[type=submit] {
     border-style: none;
     background-color: white;
-    margin: 10px 0px;
-    display: block; }
+    display: block;
+    margin-bottom: 20px;
+    height: 21px; }
   form #search-artist {
     border-bottom: solid 1px #161c20; }
     form #search-artist::placeholder {
@@ -79,21 +132,70 @@ form {
     transform: translateY(-1px);
     text-shadow: 0px 0px 0px #161c20;
     -webkit-text-shadow: 0px 0px 0px #161c20;
-    -khtml-text-shadow: 0px 0px 0px #161c20;
+    -o-text-shadow: 0px 0px 0px #161c20;
+    -ms-text-shadow: 0px 0px 0px #161c20;
     -moz-text-shadow: 0px 0px 0px #161c20; }
 
-.home-handler, .artist-handler {
-  max-width: 1200px;
-  justify-content: center;
-  align-items: flex-start; }
-
 .home-list, .artist-list {
-  margin: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   list-style-type: none; }
   .home-list li, .artist-list li {
-    margin: 20px 10px; }
-    .home-list li h2, .home-list li h4, .artist-list li h2, .artist-list li h4 {
-      max-width: 450px; }
+    margin: 20px;
+    max-width: 450px;
+    display: flex;
+    flex-direction: column; }
+    .home-list li:hover, .artist-list li:hover {
+      -moz-transform: translateY(-1px);
+      -ms-transform: translateY(-1px);
+      -o-transform: translateY(-1px);
+      -webkit-transform: translateY(-1px);
+      transform: translateY(-1px);
+      text-shadow: 0px 0px 0px #161c20;
+      -webkit-text-shadow: 0px 0px 0px #161c20;
+      -o-text-shadow: 0px 0px 0px #161c20;
+      -ms-text-shadow: 0px 0px 0px #161c20;
+      -moz-text-shadow: 0px 0px 0px #161c20; }
+    .home-list li img, .artist-list li img {
+      align-self: center; }
+    .home-list li h2, .artist-list li h2 {
+      margin: 10px 0px;
+      display: block;
+      width: inherit; }
+
+.artist-details {
+  margin-left: 20px;
+  margin-bottom: 20px; }
+  .artist-details .puzzle-prompt {
+    position: relative;
+    max-width: 450px; }
+    .artist-details .puzzle-prompt img {
+      display: block; }
+    .artist-details .puzzle-prompt .img-overlay {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      transition: 0.5s ease;
+      background-color: rgba(255, 255, 255, 0.7); }
+      .artist-details .puzzle-prompt .img-overlay:hover {
+        opacity: 1; }
+  .artist-details h5 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center; }
+  .artist-details h2 {
+    margin: 10px 0px; }
+
+#return {
+  margin: 10px 0px 10px 20px; }
 
 img {
   max-width: 450px; }
