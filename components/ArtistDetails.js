@@ -1,5 +1,6 @@
 import React from 'react'
 import Loading from './Loading'
+import Puzzle from './Puzzle'
 
 class ArtistDetails extends React.Component {
     constructor(props) {
@@ -13,9 +14,9 @@ class ArtistDetails extends React.Component {
             initTileGame: false,
             canvasHeight: null,
             canvasWidth: null,
+            imageSrc: null,
             once: false,
             url:    'https://www.rijksmuseum.nl/api/en/collection?key=y6SDEyFO&format=json&imgonly=True&q=',
-            tileUrl:'https://www.rijksmuseum.nl/api/en/collection/Q/tiles?key=y6SDEyFO&format=json',
         }
 
         this.handleCanvasSize = this.handleCanvasSize.bind(this)
@@ -48,24 +49,20 @@ class ArtistDetails extends React.Component {
 
     handleCanvasSize(imageRef) {
         if(!this.state.once) {
-            let height
-            let width
             setTimeout(() => {
                 console.log(imageRef)
-                height = imageRef.height
-                width = imageRef.width
                 this.setState({
-                    canvasHeight: height,
-                    canvasWidth: width,
+                    canvasHeight: imageRef.height,
+                    canvasWidth: imageRef.width,
+                    imageSrc: imageRef.src,
                     once: true
                 })
-            }, 2000)
+            }, 1000)
         }
     }
 
     render() {
-        const { error, items, initTileGame, itemLoaded, canvasHeight, canvasWidth } = this.state
-        console.log(items)
+        const { error, items, initTileGame, itemLoaded, canvasHeight, canvasWidth, imageSrc } = this.state
         let returnItem
 
         if (error) {
@@ -83,11 +80,11 @@ class ArtistDetails extends React.Component {
             returnItem = (
                 <div className='artist-details'>
                     {initTileGame ? (
-                        <canvas 
-                            id='canvas'
+                        <Puzzle 
                             height={canvasHeight}
-                            width={canvasWidth}>
-                        </canvas>
+                            width={canvasWidth}
+                            src={imageSrc}
+                        />
                     ) : (
                         <div className="puzzle-prompt">
                             <img 
