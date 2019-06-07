@@ -98,9 +98,7 @@ class Home extends React.Component {
                 artistID: artistID
             })
         } else {
-            this.setState({ 
-                browsingArtist: false })
-        }
+            this.setState({ browsingArtist: false }) }
     }
 
     componentDidMount() {
@@ -126,9 +124,7 @@ class Home extends React.Component {
                 </div>
             )
         } else {
-            return (
-                <Loading />
-            )
+            return ( <Loading /> )
         }
     }
 }

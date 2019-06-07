@@ -5,13 +5,11 @@ import { DragDropContext } from 'react-dnd';
 import Cell from './Cell'
 
 function shuffle(a) {
-    const b = a.slice();
-
-    for(let i = b.length - 1; i > 0; i--) {
+    for(let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [b[i], b[j]] = [b[j], b[i]];
+        [a[i], a[j]] = [a[j], a[i]];
     }
-    return b;
+    return a;
 }
 
 
@@ -19,36 +17,37 @@ class Puzzle extends React.Component {
     constructor(props) {
         super(props)
 
-        const cellH = Math.floor(props.height / props.level)
-        const cellW = Math.floor(props.width / props.level)
-
         const cells = props.level * props.level
-        let positionArr = [...Array(cells).keys()]
-
+        // creating array with initial difficulty, but not updating it on changing difficulty
+        // also not passing new difficulty down, so this component really only gets rendered once
+        // code in here may be right
+        // console.log('init level at ', props.level)
         this.state = {
-            positions: positionArr,
+            positions: [...Array(cells).keys()],
             canvasHeight: props.height,
             canvasWidth: props.width,
-            cellHeight: cellH,
-            cellWidth: cellW,
+            cellHeight: Math.floor(props.height / props.level),
+            cellWidth: Math.floor(props.width / props.level),
             imageSrc: props.src,
-            tileSize: 300,
-            size: 300,
             level: props.level,
+            oldDifficulty: props.level,
         }
     }
 
-    componentDidMount(props) {
-        // const cellH = Math.floor(this.state.cellHeight / this.state.level)
-        // const cellW = Math.floor(this.state.cellWidth / this.state.level)
-        // console.log(this.state.canvasHeight,'/',this.state.level,'=', (cellH))
-        // console.log(this.state.canvasWidth,'/',this.state.level,'=', (cellW))
-        // might need to find lowest common denominator to have a good square cell size instead of 10 by 10 on a rectangle for example
+    // might need to find lowest common denominator to have a good square cell size instead of 10 by 10 on a rectangle for example
 
+    componentDidMount() {
         const { positions } = this.state;
-
         this.setState({ positions: shuffle(positions) });
     }
+
+    // componentDidUpdate() {
+    //     if(this.state.level !== this.state.oldDifficulty) {
+    //         console.log(this.state.level, 'is a different difficulty to ', this.state.oldDifficulty)
+    //     } else {
+    //         console.log(this.state.level, 'is the same difficulty as ', this.state.oldDifficulty)
+    //     }
+    // }
 
     onSwap(sourcePosition, dropPosition) {
         const oldPositions = this.state.positions.slice();
@@ -78,14 +77,14 @@ class Puzzle extends React.Component {
         this.setState({ positions: newPositions });
     
         if(done) {
-            this.props.onDone();
+            this.props.onDone();//WIN CONDITION HERE
         }
     }
 
-    renderSquares() {
-        const { imageSrc, cellHeight, cellWidth, level, canvasWidth, canvasHeight } = this.state;
-        const { positions } = this.state;
-        const squares = positions.map((i) => {
+    renderCells() {
+        const { imageSrc, cellHeight, cellWidth, level, canvasWidth, canvasHeight, positions } = this.state;
+
+        const cells = positions.map((i) => {
             return (
                 <Cell
                     key={i}
@@ -100,14 +99,12 @@ class Puzzle extends React.Component {
                 />
             );
         })
-    
-        return squares;
+        return cells;
     }
 
 
     render() {
         const { canvasWidth, canvasHeight } = this.state
-
         return (
             <div
                 style={{
@@ -117,7 +114,7 @@ class Puzzle extends React.Component {
                     width: `${canvasWidth}px`,
                     height: `${canvasHeight}px`
                 }}>
-                {this.renderSquares()}
+                {this.renderCells()}
             </div>
         ) 
     }

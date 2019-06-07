@@ -1,5 +1,5 @@
 import React from 'react';
-import { DragSource, DropTarget } from 'react-dnd';
+import { DropTarget } from 'react-dnd';
 import Piece from './Piece';
 
 const Cell = (props) => {

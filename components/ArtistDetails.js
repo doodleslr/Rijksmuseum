@@ -5,7 +5,7 @@ import Puzzle from './Puzzle'
 class ArtistDetails extends React.Component {
     constructor(props) {
         super(props)
-        this.canvasRef = React.createRef()
+        this.imageRef = React.createRef()
         this.state ={
             error: null,
             artistID: this.props.artistID,
@@ -15,11 +15,12 @@ class ArtistDetails extends React.Component {
             canvasHeight: null,
             canvasWidth: null,
             imageSrc: null,
-            once: false,
-            url:    'https://www.rijksmuseum.nl/api/en/collection?key=y6SDEyFO&format=json&imgonly=True&q=',
+            url: 'https://www.rijksmuseum.nl/api/en/collection?key=y6SDEyFO&format=json&imgonly=True&q=',
+            level: 3,
         }
 
-        this.handleCanvasSize = this.handleCanvasSize.bind(this)
+        this.handleLoad = this.handleLoad.bind(this)
+        this.setDifficulty = this.setDifficulty.bind(this)
     }
 
     async fetchQuery(result) {
@@ -47,44 +48,58 @@ class ArtistDetails extends React.Component {
         this.fetchQuery(result)
     }
 
-    handleCanvasSize(imageRef) {
-        if(!this.state.once) {
-            setTimeout(() => {
-                console.log(imageRef)
-                this.setState({
-                    canvasHeight: imageRef.height,
-                    canvasWidth: imageRef.width,
-                    imageSrc: imageRef.src,
-                    once: true
-                })
-            }, 1000)
+    handleLoad() {
+        this.setState({
+            canvasHeight: this.imageRef.current.height,
+            canvasWidth: this.imageRef.current.width,
+            imageSrc: this.imageRef.current.src
+        })
+    }
+
+    setDifficulty(e) {
+        e.preventDefault()
+        switch(e.target.value) {
+            case 'Easy':
+                this.setState({ level: 3 })
+                break;
+            case 'Medium':
+                this.setState({ level: 5 })
+                break;
+            case 'Hard':
+                this.setState({ level: 7 })
+                break;
+            case 'Extreme':
+                this.setState({ level: 10 })
+                break;            
         }
     }
 
     render() {
-        const { error, items, initTileGame, itemLoaded, canvasHeight, canvasWidth, imageSrc } = this.state
+        const { error, items, initTileGame, itemLoaded, canvasHeight, canvasWidth, imageSrc, level } = this.state
         let returnItem
+        let item
 
         if (error) {
-            returnItem = ( 
-                <div>Please refresh. Error: {error.message}</div>
-            )
+            returnItem = ( <div>Please refresh. Error: {error.message}</div> )
         } else if (itemLoaded) {
-            let item
-            items.artObjects.map((object) => {
-                item = object
-            })
-            let year
-            year = item.longTitle.slice(-4)
-
+            items.artObjects.map((object) => { item = object })
+            let year = item.longTitle.slice(-4)
             returnItem = (
                 <div className='artist-details'>
                     {initTileGame ? (
+                        //console.log('puzzle rendered with level: ', level),
+                        //logs new puzzle with correct difficulty, but does not rerender puzzle with new difficulty
+                        console.log(<Puzzle 
+                            height={canvasHeight}
+                            width={canvasWidth}
+                            src={imageSrc}
+                            level={level}
+                        />),
                         <Puzzle 
                             height={canvasHeight}
                             width={canvasWidth}
                             src={imageSrc}
-                            level={5}
+                            level={level}
                         />
                     ) : (
                         <div className="puzzle-prompt">
@@ -92,19 +107,22 @@ class ArtistDetails extends React.Component {
                                 id='imgCanvasRef'
                                 alt={item.longTitle} 
                                 src={item.webImage.url}
-                                ref={(imageRef) => this.handleCanvasSize(imageRef)}>
+                                ref={this.imageRef}
+                                onLoad={() => this.handleLoad()}>
                             </img>
                             <div 
                                 className='img-overlay'
-                                onClick={() => 
-                                    this.setState({ 
-                                        initTileGame: true,
-                                    })
-                                }>
+                                onClick={ () => this.setState({ initTileGame: true }) }>
+
                                 <h5>Click to play an image puzzle game</h5>
                             </div>
                         </div>
                     )}
+                    
+                    <input type='submit' value='Easy' onClick={ e => { this.setDifficulty(e) }}></input>
+                    <input type='submit' value='Medium' onClick={ e => { this.setDifficulty(e) }}></input>
+                    <input type='submit' value='Hard' onClick={ e => { this.setDifficulty(e) }}></input>
+                    <input type='submit' value='Extreme' onClick={ e => { this.setDifficulty(e) }}></input>
 
                     <h2><i>{item.principalOrFirstMaker}</i></h2>
                     <h4>{item.title}</h4>
@@ -112,11 +130,8 @@ class ArtistDetails extends React.Component {
                 </div>
             )
         } else {
-            returnItem = (
-                <Loading />
-            )
+            returnItem = ( <Loading /> )
         }
-
         return ( returnItem )
     }
 }

@@ -52,7 +52,7 @@ function ReturnArtists(props) {
 
 function SearchFunction(props) {
     return(
-        <form onSubmit={ e => { props.onSubmit(e) }}>
+        <form id='searchForm' onSubmit={ e => { props.onSubmit(e) }}>
             <input 
                 id='search-artist' 
                 type='text'
@@ -90,21 +90,16 @@ class SearchArtist extends React.Component {
                 artistID: artistID
             })
         } else {
-            this.setState({ 
-                browsingArtist: false })
-        }
+            this.setState({ browsingArtist: false }) }
     }
 
     updateInput(e) {
         const value = e.target.value
-        this.setState({
-            input: value
-        })
+        this.setState({ input: value })
     }
 
     handleSubmit(e) {
         e.preventDefault()
-
         this.setState({ currentLoading: true })
         this.fetchArtistQuery(this.state.input)
     }
