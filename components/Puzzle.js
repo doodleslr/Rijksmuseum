@@ -1,17 +1,19 @@
 import React from 'react'
 import TouchBackend from 'react-dnd-touch-backend';
+import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import Cell from './Cell'
 
 function shuffle(a) {
-    const b = a.slice()
+    const b = a.slice();
 
     for(let i = b.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1))
-        [b[i], b[j]] = [b[j], b[i]]
+        const j = Math.floor(Math.random() * (i + 1));
+        [b[i], b[j]] = [b[j], b[i]];
     }
-    return b
+    return b;
 }
+
 
 class Puzzle extends React.Component {
     constructor(props) {
@@ -43,39 +45,42 @@ class Puzzle extends React.Component {
         // console.log(this.state.canvasWidth,'/',this.state.level,'=', (cellW))
         // might need to find lowest common denominator to have a good square cell size instead of 10 by 10 on a rectangle for example
 
+        const { positions } = this.state;
+
+        this.setState({ positions: shuffle(positions) });
     }
 
-    // onSwap(sourcePosition, dropPosition) {
-    //     const oldPositions = this.state.positions.slice();
-    //     const newPositions = [];
-    //     let done = true;
-    //     let p = 0;
+    onSwap(sourcePosition, dropPosition) {
+        const oldPositions = this.state.positions.slice();
+        const newPositions = [];
+        let done = true;
+        let p = 0;
     
-    //     for (let i in oldPositions) {
-    //         let value = oldPositions[i];
-    //         let newValue = value;
+        for (let i in oldPositions) {
+            let value = oldPositions[i];
+            let newValue = value;
         
-    //         if (value === sourcePosition) {
-    //             newValue = dropPosition;
-    //         } else if (value === dropPosition) {
-    //             newValue = sourcePosition;
-    //         }
+            if (value === sourcePosition) {
+                newValue = dropPosition;
+            } else if (value === dropPosition) {
+                newValue = sourcePosition;
+            }
         
-    //         newPositions.push(newValue);
+            newPositions.push(newValue);
         
-    //         if (newValue !== p) {
-    //             done = false;
-    //         }
+            if (newValue !== p) {
+                done = false;
+            }
         
-    //         p = p + 1;
-    //     }
+            p = p + 1;
+        }
     
-    //     this.setState({ positions: newPositions });
+        this.setState({ positions: newPositions });
     
-    //     if(done) {
-    //         this.props.onDone();
-    //     }
-    // }
+        if(done) {
+            this.props.onDone();
+        }
+    }
 
     renderSquares() {
         const { imageSrc, cellHeight, cellWidth, level, canvasWidth, canvasHeight } = this.state;
@@ -91,7 +96,7 @@ class Puzzle extends React.Component {
                     image={imageSrc}
                     level={level}
                     position={i}
-                    // onSwap={this.onSwap.bind(this)}
+                    onSwap={this.onSwap.bind(this)}
                 />
             );
         })
@@ -118,4 +123,16 @@ class Puzzle extends React.Component {
     }
 }
 
-export default DragDropContext(TouchBackend)(Puzzle);
+function isClientMobile() {
+    let mql = window.matchMedia('(max-width: 750px)');
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && mql.matches ) {
+        console.log('ismobile')
+        return true;
+    }
+    console.log('notmobile')
+    return false;
+}
+
+const context = isClientMobile() ? DragDropContext(TouchBackend)(Puzzle) : DragDropContext(HTML5Backend)(Puzzle);
+
+export default context;

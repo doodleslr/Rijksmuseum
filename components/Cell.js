@@ -19,7 +19,7 @@ const Cell = (props) => {
             pieceWidth={pieceWidth}
             x={x}
             y={y}
-            // isOver={isOver}
+            isOver={isOver}
         />
 
         <style>{`
