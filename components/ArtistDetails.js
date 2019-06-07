@@ -84,6 +84,7 @@ class ArtistDetails extends React.Component {
                             height={canvasHeight}
                             width={canvasWidth}
                             src={imageSrc}
+                            level={5}
                         />
                     ) : (
                         <div className="puzzle-prompt">

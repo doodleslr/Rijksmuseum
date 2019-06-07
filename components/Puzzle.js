@@ -17,26 +17,32 @@ class Puzzle extends React.Component {
     constructor(props) {
         super(props)
 
+        const cellH = Math.floor(props.height / props.level)
+        const cellW = Math.floor(props.width / props.level)
+
+        const cells = props.level * props.level
+        let positionArr = [...Array(cells).keys()]
+
         this.state = {
-            positions: null,
+            positions: positionArr,
             canvasHeight: props.height,
             canvasWidth: props.width,
+            cellHeight: cellH,
+            cellWidth: cellW,
             imageSrc: props.src,
             tileSize: 300,
             size: 300,
-            level: 10,
+            level: props.level,
         }
     }
 
-    componentDidMount() {
-        const cellHeight = (this.state.canvasHeight / this.state.level) 
-        const cellWidth = (this.state.canvasWidth / this.state.level)
-        console.log(this.state.canvasHeight,'/',this.state.level,'=', Math.floor(cellHeight))
-        console.log(this.state.canvasWidth,'/',this.state.level,'=', Math.floor(cellWidth))
+    componentDidMount(props) {
+        // const cellH = Math.floor(this.state.cellHeight / this.state.level)
+        // const cellW = Math.floor(this.state.cellWidth / this.state.level)
+        // console.log(this.state.canvasHeight,'/',this.state.level,'=', (cellH))
+        // console.log(this.state.canvasWidth,'/',this.state.level,'=', (cellW))
         // might need to find lowest common denominator to have a good square cell size instead of 10 by 10 on a rectangle for example
-        // this.setState({
-        //     positions: Array(cells)
-        // })
+
     }
 
     // onSwap(sourcePosition, dropPosition) {
@@ -71,32 +77,33 @@ class Puzzle extends React.Component {
     //     }
     // }
 
-    // renderSquares() {
-    //     const { imageSrc, size, level } = this.state;
-    //     const { positions } = this.state;
-    //     console.log(positions)
-    //     const squares = positions.map((i) => {
-    //         return (
-    //             <Cell
-    //                 key={i}
-    //                 size={size}
-    //                 image={imageSrc}
-    //                 level={level}
-    //                 position={i}
-    //                 onSwap={this.onSwap.bind(this)}
-    //             />
-    //         );
-    //     })
+    renderSquares() {
+        const { imageSrc, cellHeight, cellWidth, level, canvasWidth, canvasHeight } = this.state;
+        const { positions } = this.state;
+        const squares = positions.map((i) => {
+            return (
+                <Cell
+                    key={i}
+                    height={cellHeight}
+                    width={cellWidth}
+                    pieceHeight={canvasHeight}
+                    pieceWidth={canvasWidth}
+                    image={imageSrc}
+                    level={level}
+                    position={i}
+                    // onSwap={this.onSwap.bind(this)}
+                />
+            );
+        })
     
-    //     return squares;
-    // }
+        return squares;
+    }
 
 
     render() {
-        const { canvasWidth, canvasHeight, positions } = this.state
-        console.log(positions)
+        const { canvasWidth, canvasHeight } = this.state
 
-        let returnItem = (
+        return (
             <div
                 style={{
                     display: 'flex',
@@ -105,11 +112,9 @@ class Puzzle extends React.Component {
                     width: `${canvasWidth}px`,
                     height: `${canvasHeight}px`
                 }}>
-
+                {this.renderSquares()}
             </div>
-        )
-        // {this.renderSquares()}
-         return ( returnItem )
+        ) 
     }
 }
 
