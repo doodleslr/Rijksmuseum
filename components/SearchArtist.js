@@ -53,13 +53,17 @@ function ReturnArtists(props) {
 function SearchFunction(props) {
     return(
         <form id='searchForm' onSubmit={ e => { props.onSubmit(e) }}>
-            <input 
-                id='search-artist' 
-                type='text'
-                placeholder='Eg: Rembrandt'
-                value={ props.value }
-                onChange={ props.onChange }
-            />
+            <div className='search-field'>
+                <input 
+                    id='search-artist'
+                    name='search-artist'
+                    type='text'
+                    placeholder='Eg: Rembrandt Van Rijn'
+                    value={ props.value }
+                    onChange={ props.onChange }
+                />
+                <label htmlFor='search-artist'>Search Gallery</label>
+            </div>
             <input type='submit' value='Search'></input>
         </form>
     )

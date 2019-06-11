@@ -12,7 +12,6 @@ nav {
     padding-top: 50px;
 }
 .home-handler, .artist-handler {
-    margin-left: 145px;
     margin-bottom: 30px;
     width: 100%;
     padding-top: 50px;
@@ -46,21 +45,52 @@ nav {
 }
 
 form {
-    margin-left: 20px;
-    #search-artist, input[type=submit] {
+    margin: 0px 20px;
+    .search-field {
+        display: flex;
+        flex-flow: column-reverse;
+        #search-artist, label {
+            transition: all 0.2s;
+            touch-action: manipulation;
+        }
+        label {
+            margin-bottom: 10px;
+        }
+        #search-artist {
+            border-style: none;
+            background-color: white;
+            display: block;
+            margin-bottom: 10px;
+            height: 21px;
+            border-bottom: solid 1px $charcoal;
+            &::placeholder {
+                opacity: 0;
+                transition: inherit;
+            }
+            &:focus::placeholder {
+                opacity: 1;
+            }
+            &:placeholder-shown + label {
+                cursor: text;
+                max-width: 66.66%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                transform-origin: left bottom;
+                transform: translate(0, 1.75rem);
+            }
+            &:focus + label {
+                transform: translate(0, 0);
+                cursor: pointer;
+            }
+        }
+    }
+    input[type=submit] {
         border-style: none;
         background-color: white;
         display: block;
         margin-bottom: 20px;
         height: 21px;
-    }
-    #search-artist {
-        border-bottom: solid 1px $charcoal;
-        &::placeholder {
-            color: $charcoal;
-        }
-    }
-    input[type=submit] {
         &:hover {
             @include hover;
         }
@@ -76,8 +106,7 @@ form {
         &:hover {
             @include hover;
         }
-        margin: 20px;
-        max-width: 450px;
+        margin: 0px 20px 20px 20px;
         display: flex;
         flex-direction: column;
         img {
@@ -94,6 +123,16 @@ form {
 .artist-details {
     margin-left: 20px;
     margin-bottom: 20px;
+    .level {
+        background: white;
+        border-style: none;
+        &:hover {
+            @include hover;
+        }
+    }
+    hr {
+        margin: 10px 20px 10px 0px;
+    }
     .puzzle-prompt {
         position: relative;
         max-width: 450px;
@@ -130,8 +169,4 @@ form {
 
 #return {
     margin: 10px 0px 10px 20px;
-}
-
-img {
-    max-width: 450px;
 }

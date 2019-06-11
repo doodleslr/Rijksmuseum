@@ -1,3 +1,90 @@
+@media screen and (min-width: 992px) {
+  nav {
+    width: 10vw; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  nav {
+    width: 15vw; } }
+@media (min-width: 600px) and (max-width: 767px) {
+  nav {
+    width: 20vw; } }
+@media (min-width: 480px) and (max-width: 599px) {
+  nav {
+    width: 25vw; } }
+@media only screen and (max-width: 479px) {
+  nav {
+    width: 25vw; } }
+
+@media screen and (min-width: 992px) {
+  .home-handler, .artist-handler {
+    margin-left: 10vw; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .home-handler, .artist-handler {
+    margin-left: 15vw; } }
+@media (min-width: 600px) and (max-width: 767px) {
+  .home-handler, .artist-handler {
+    margin-left: 20vw; } }
+@media (min-width: 480px) and (max-width: 599px) {
+  .home-handler, .artist-handler {
+    margin-left: 25vw; } }
+@media only screen and (max-width: 479px) {
+  .home-handler, .artist-handler {
+    margin-left: 25vw; } }
+
+@media screen and (min-width: 992px) {
+  img {
+    max-width: 600px; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  img {
+    max-width: 450px; } }
+@media (min-width: 600px) and (max-width: 767px) {
+  img {
+    max-width: 350px; } }
+@media (min-width: 480px) and (max-width: 599px) {
+  img {
+    max-width: 290px; } }
+@media only screen and (max-width: 479px) {
+  img {
+    max-width: 200px; } }
+
+@media screen and (min-width: 992px) {
+  .level {
+    margin: 15px 30px 0px 0px; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .level {
+    margin: 15px 25px 0px 0px; } }
+@media (min-width: 600px) and (max-width: 767px) {
+  .level {
+    margin: 15px 20px 0px 0px; } }
+@media (min-width: 480px) and (max-width: 599px) {
+  .level {
+    margin: 20px 15px 0px 0px; } }
+@media only screen and (max-width: 479px) {
+  .level {
+    margin: 20px 10px 0px 0px; } }
+
+@media screen and (min-width: 992px) {
+  .home-list li, .artist-list li {
+    max-width: 600px; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .home-list li, .artist-list li {
+    max-width: 450px; } }
+@media (min-width: 600px) and (max-width: 767px) {
+  .home-list li, .artist-list li {
+    max-width: 350px; } }
+@media (min-width: 480px) and (max-width: 599px) {
+  .home-list li, .artist-list li {
+    max-width: 290px; } }
+@media only screen and (max-width: 479px) {
+  .home-list li, .artist-list li {
+    max-width: 200px; } }
+
+@media (min-width: 480px) and (max-width: 599px) {
+  .artist-details {
+    margin-right: 20px; } }
+@media only screen and (max-width: 479px) {
+  .artist-details {
+    margin-right: 20px; } }
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -8,8 +95,7 @@
 
 nav {
   border-right: 1px solid #161c20;
-  height: 100%;
-  width: 145px; }
+  height: 100%; }
 
 body {
   align-content: center;
@@ -85,7 +171,6 @@ nav {
   padding-top: 50px; }
 
 .home-handler, .artist-handler {
-  margin-left: 145px;
   margin-bottom: 30px;
   width: 100%;
   padding-top: 50px;
@@ -113,28 +198,55 @@ nav {
           -moz-text-shadow: 0px 0px 0px #161c20; }
 
 form {
-  margin-left: 20px; }
-  form #search-artist, form input[type=submit] {
+  margin: 0px 20px; }
+  form .search-field {
+    display: flex;
+    flex-flow: column-reverse; }
+    form .search-field #search-artist, form .search-field label {
+      transition: all 0.2s;
+      touch-action: manipulation; }
+    form .search-field label {
+      margin-bottom: 10px; }
+    form .search-field #search-artist {
+      border-style: none;
+      background-color: white;
+      display: block;
+      margin-bottom: 10px;
+      height: 21px;
+      border-bottom: solid 1px #161c20; }
+      form .search-field #search-artist::placeholder {
+        opacity: 0;
+        transition: inherit; }
+      form .search-field #search-artist:focus::placeholder {
+        opacity: 1; }
+      form .search-field #search-artist:placeholder-shown + label {
+        cursor: text;
+        max-width: 66.66%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transform-origin: left bottom;
+        transform: translate(0, 1.75rem); }
+      form .search-field #search-artist:focus + label {
+        transform: translate(0, 0);
+        cursor: pointer; }
+  form input[type=submit] {
     border-style: none;
     background-color: white;
     display: block;
     margin-bottom: 20px;
     height: 21px; }
-  form #search-artist {
-    border-bottom: solid 1px #161c20; }
-    form #search-artist::placeholder {
-      color: #161c20; }
-  form input[type=submit]:hover {
-    -moz-transform: translateY(-1px);
-    -ms-transform: translateY(-1px);
-    -o-transform: translateY(-1px);
-    -webkit-transform: translateY(-1px);
-    transform: translateY(-1px);
-    text-shadow: 0px 0px 0px #161c20;
-    -webkit-text-shadow: 0px 0px 0px #161c20;
-    -o-text-shadow: 0px 0px 0px #161c20;
-    -ms-text-shadow: 0px 0px 0px #161c20;
-    -moz-text-shadow: 0px 0px 0px #161c20; }
+    form input[type=submit]:hover {
+      -moz-transform: translateY(-1px);
+      -ms-transform: translateY(-1px);
+      -o-transform: translateY(-1px);
+      -webkit-transform: translateY(-1px);
+      transform: translateY(-1px);
+      text-shadow: 0px 0px 0px #161c20;
+      -webkit-text-shadow: 0px 0px 0px #161c20;
+      -o-text-shadow: 0px 0px 0px #161c20;
+      -ms-text-shadow: 0px 0px 0px #161c20;
+      -moz-text-shadow: 0px 0px 0px #161c20; }
 
 .home-list, .artist-list {
   display: flex;
@@ -142,8 +254,7 @@ form {
   flex-wrap: wrap;
   list-style-type: none; }
   .home-list li, .artist-list li {
-    margin: 20px;
-    max-width: 450px;
+    margin: 0px 20px 20px 20px;
     display: flex;
     flex-direction: column; }
     .home-list li:hover, .artist-list li:hover {
@@ -167,6 +278,22 @@ form {
 .artist-details {
   margin-left: 20px;
   margin-bottom: 20px; }
+  .artist-details .level {
+    background: white;
+    border-style: none; }
+    .artist-details .level:hover {
+      -moz-transform: translateY(-1px);
+      -ms-transform: translateY(-1px);
+      -o-transform: translateY(-1px);
+      -webkit-transform: translateY(-1px);
+      transform: translateY(-1px);
+      text-shadow: 0px 0px 0px #161c20;
+      -webkit-text-shadow: 0px 0px 0px #161c20;
+      -o-text-shadow: 0px 0px 0px #161c20;
+      -ms-text-shadow: 0px 0px 0px #161c20;
+      -moz-text-shadow: 0px 0px 0px #161c20; }
+  .artist-details hr {
+    margin: 10px 20px 10px 0px; }
   .artist-details .puzzle-prompt {
     position: relative;
     max-width: 450px; }
@@ -196,8 +323,5 @@ form {
 
 #return {
   margin: 10px 0px 10px 20px; }
-
-img {
-  max-width: 450px; }
 
 /*# sourceMappingURL=main.css.map */

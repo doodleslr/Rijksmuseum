@@ -1,1 +1,104 @@
 @import "_base/_bits";
+
+
+nav {
+	@include XL {
+    	width: 10vw;
+    }
+    @include LG {
+    	width: 15vw;
+    }
+    @include MD {
+    	width: 20vw;
+    }
+    @include SM {
+    	width: 25vw;
+
+	}
+    @include XS {
+    	width: 25vw;
+	}
+}
+.home-handler, .artist-handler {
+    @include XL {
+        margin-left: 10vw;
+    }
+    @include LG {
+    	margin-left: 15vw;
+    }
+    @include MD {
+    	margin-left: 20vw;
+    }
+    @include SM {
+    	margin-left: 25vw;
+	}
+    @include XS {
+    	margin-left: 25vw;
+	}
+}
+
+img {
+    @include XL {
+    	max-width: 600px;
+    }
+    @include LG {
+    	max-width: 450px;
+    }
+    @include MD {
+    	max-width: 350px;
+    }
+    @include SM {
+    	max-width: 290px;
+	}
+    @include XS {
+    	max-width: 200px;
+	}
+}
+
+.level {
+    @include XL {
+    	margin: 15px 30px 0px 0px;
+    }
+    @include LG {
+    	margin: 15px 25px 0px 0px;
+    }
+    @include MD {
+    	margin: 15px 20px 0px 0px;
+    }
+    @include SM {
+    	margin: 20px 15px 0px 0px;
+	}
+    @include XS {
+    	margin: 20px 10px 0px 0px;
+	}
+}
+
+.home-list, .artist-list {
+    li {
+        @include XL {
+            max-width: 600px;
+        }
+        @include LG {
+            max-width: 450px;
+        }
+        @include MD {
+            max-width: 350px;
+        }
+        @include SM {
+            max-width: 290px;
+        }
+        @include XS {
+            max-width: 200px;
+        }
+    }
+}
+
+.artist-details {
+
+    @include SM {
+    	margin-right: 20px;
+	}
+    @include XS {
+    	margin-right: 20px;
+	}
+}

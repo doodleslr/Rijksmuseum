@@ -1,6 +1,8 @@
 import React from 'react'
 import Loading from './Loading'
 import Puzzle from './Puzzle'
+import { DragDropContext } from 'react-dnd';
+import { TouchBackend } from 'react-dnd-touch-backend';
 
 class ArtistDetails extends React.Component {
     constructor(props) {
@@ -57,6 +59,7 @@ class ArtistDetails extends React.Component {
     }
 
     setDifficulty(e) {
+        this.setState({ initTileGame: false })
         e.preventDefault()
         switch(e.target.value) {
             case 'Easy':
@@ -74,6 +77,16 @@ class ArtistDetails extends React.Component {
         }
     }
 
+    onDone() {
+        let pieceArr = document.getElementsByClassName('piece')
+        for (let i in pieceArr) {
+            let item = pieceArr[i].firstChild
+            if(item) {
+                item.style.border = '0px solid black'
+            }
+        }
+    }
+
     render() {
         const { error, items, initTileGame, itemLoaded, canvasHeight, canvasWidth, imageSrc, level } = this.state
         let returnItem
@@ -84,24 +97,32 @@ class ArtistDetails extends React.Component {
         } else if (itemLoaded) {
             items.artObjects.map((object) => { item = object })
             let year = item.longTitle.slice(-4)
-            returnItem = (
-                <div className='artist-details'>
-                    {initTileGame ? (
-                        //console.log('puzzle rendered with level: ', level),
-                        //logs new puzzle with correct difficulty, but does not rerender puzzle with new difficulty
-                        console.log(<Puzzle 
-                            height={canvasHeight}
-                            width={canvasWidth}
-                            src={imageSrc}
-                            level={level}
-                        />),
+
+            if (initTileGame) {
+                returnItem = ( 
+                    <div className='artist-details'>
                         <Puzzle 
                             height={canvasHeight}
                             width={canvasWidth}
                             src={imageSrc}
                             level={level}
+                            onDone={() => this.onDone()}
                         />
-                    ) : (
+                        <input className='level' type='submit' value='Easy' onClick={ e => { this.setDifficulty(e) }}></input>
+                        <input className='level' type='submit' value='Medium' onClick={ e => { this.setDifficulty(e) }}></input>
+                        <input className='level' type='submit' value='Hard' onClick={ e => { this.setDifficulty(e) }}></input>
+                        <input className='level' type='submit' value='Extreme' onClick={ e => { this.setDifficulty(e) }}></input>
+
+                        <hr/>
+                        
+                        <h2><i>{item.principalOrFirstMaker}</i></h2>
+                        <h4>{item.title}</h4>
+                        <h4>{year}</h4>
+                    </div>
+                )
+            } else {
+                returnItem = (
+                    <div className='artist-details'>
                         <div className="puzzle-prompt">
                             <img 
                                 id='imgCanvasRef'
@@ -112,23 +133,18 @@ class ArtistDetails extends React.Component {
                             </img>
                             <div 
                                 className='img-overlay'
-                                onClick={ () => this.setState({ initTileGame: true }) }>
+                                onClick={() => this.setState({ initTileGame: true }) }>
 
                                 <h5>Click to play an image puzzle game</h5>
                             </div>
                         </div>
-                    )}
-                    
-                    <input type='submit' value='Easy' onClick={ e => { this.setDifficulty(e) }}></input>
-                    <input type='submit' value='Medium' onClick={ e => { this.setDifficulty(e) }}></input>
-                    <input type='submit' value='Hard' onClick={ e => { this.setDifficulty(e) }}></input>
-                    <input type='submit' value='Extreme' onClick={ e => { this.setDifficulty(e) }}></input>
 
-                    <h2><i>{item.principalOrFirstMaker}</i></h2>
-                    <h4>{item.title}</h4>
-                    <h4>{year}</h4>
-                </div>
-            )
+                        <h2><i>{item.principalOrFirstMaker}</i></h2>
+                        <h4>{item.title}</h4>
+                        <h4>{year}</h4>
+                    </div>
+                )
+            }
         } else {
             returnItem = ( <Loading /> )
         }

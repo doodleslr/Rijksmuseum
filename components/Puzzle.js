@@ -18,10 +18,7 @@ class Puzzle extends React.Component {
         super(props)
 
         const cells = props.level * props.level
-        // creating array with initial difficulty, but not updating it on changing difficulty
-        // also not passing new difficulty down, so this component really only gets rendered once
-        // code in here may be right
-        // console.log('init level at ', props.level)
+
         this.state = {
             positions: [...Array(cells).keys()],
             canvasHeight: props.height,
@@ -40,14 +37,6 @@ class Puzzle extends React.Component {
         const { positions } = this.state;
         this.setState({ positions: shuffle(positions) });
     }
-
-    // componentDidUpdate() {
-    //     if(this.state.level !== this.state.oldDifficulty) {
-    //         console.log(this.state.level, 'is a different difficulty to ', this.state.oldDifficulty)
-    //     } else {
-    //         console.log(this.state.level, 'is the same difficulty as ', this.state.oldDifficulty)
-    //     }
-    // }
 
     onSwap(sourcePosition, dropPosition) {
         const oldPositions = this.state.positions.slice();
