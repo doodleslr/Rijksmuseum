@@ -55,6 +55,24 @@ img {
 	}
 }
 
+.puzzle-prompt {
+    @include XL {
+    	max-width: 600px;
+    }
+    @include LG {
+    	max-width: 450px;
+    }
+    @include MD {
+    	max-width: 350px;
+    }
+    @include SM {
+    	max-width: 290px;
+	}
+    @include XS {
+    	max-width: 200px;
+	}
+}
+
 .level {
     @include XL {
     	margin: 15px 30px 0px 0px;

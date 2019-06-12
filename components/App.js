@@ -12,17 +12,16 @@ import {
 import Loading from './Loading';
 
 function ReturnSplash(props) {
-    console.log(props)
     let returnItem
     let year
 
     if(props.browsingArtist) {
         returnItem = (
             <BrowserRouter>
-                <h3 id="return"><Link to='/' onClick={() => props.toggleBrowsing()}>Return to Home</Link></h3>
+                <h3 id="return"><Link to='/rijks/' onClick={() => props.toggleBrowsing()}>Return to Home</Link></h3>
 
                 <Route 
-                    path='/artist/:artistID' 
+                    path='/rijks/view' 
                     render={(prop) => (
                         <ArtistDetails 
                             artist={props.browsingArtist}
@@ -39,7 +38,7 @@ function ReturnSplash(props) {
                     year = item.longTitle.slice(-4),
                     <li key={item.id}>
                         <BrowserRouter>
-                            <Link to='/artist/:artistID' onClick={() => props.toggleBrowsing(item.principalOrFirstMaker, item.objectNumber)}>
+                            <Link to='/rijks/view' onClick={() => props.toggleBrowsing(item.principalOrFirstMaker, item.objectNumber)}>
                                 <img alt={item.longTitle} src={item.headerImage.url}/>
                                 <h2>{item.principalOrFirstMaker}</h2>
                                 <h4>{item.title}</h4>
@@ -134,14 +133,15 @@ function App() {
         <BrowserRouter>
             <nav>
                 <ul>
-                    <li><Link to='/'>Home</Link></li>
-                    <li><Link to='/search-artist'>Search Artists</Link></li>
+                    <li><Link to='/rijks/'>Home</Link></li>
+                    <li><Link to='/rijks/search-artist'>Search Artists</Link></li>
                 </ul>
             </nav>
             
 
+            <Route exact path='/rijks/' component={Home} />
             <Route exact path='/' component={Home} />
-            <Route path='/search-artist' component={SearchArtist} />
+            <Route path='/rijks/search-artist' component={SearchArtist} />
         </BrowserRouter>
     )
 }

@@ -57,6 +57,7 @@ form {
             margin-bottom: 10px;
         }
         #search-artist {
+            max-width: 350px;
             border-style: none;
             background-color: white;
             display: block;
@@ -132,12 +133,14 @@ form {
     }
     hr {
         margin: 10px 20px 10px 0px;
+        max-width: 400px;
     }
     .puzzle-prompt {
         position: relative;
-        max-width: 450px;
+        max-height: 95vh;
         img {
             display: block;
+            max-height: 95vh;
         }
         .img-overlay {
             position: absolute;

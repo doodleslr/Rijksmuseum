@@ -47,6 +47,22 @@
     max-width: 200px; } }
 
 @media screen and (min-width: 992px) {
+  .puzzle-prompt {
+    max-width: 600px; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .puzzle-prompt {
+    max-width: 450px; } }
+@media (min-width: 600px) and (max-width: 767px) {
+  .puzzle-prompt {
+    max-width: 350px; } }
+@media (min-width: 480px) and (max-width: 599px) {
+  .puzzle-prompt {
+    max-width: 290px; } }
+@media only screen and (max-width: 479px) {
+  .puzzle-prompt {
+    max-width: 200px; } }
+
+@media screen and (min-width: 992px) {
   .level {
     margin: 15px 30px 0px 0px; } }
 @media (min-width: 768px) and (max-width: 991px) {
@@ -208,6 +224,7 @@ form {
     form .search-field label {
       margin-bottom: 10px; }
     form .search-field #search-artist {
+      max-width: 350px;
       border-style: none;
       background-color: white;
       display: block;
@@ -293,12 +310,14 @@ form {
       -ms-text-shadow: 0px 0px 0px #161c20;
       -moz-text-shadow: 0px 0px 0px #161c20; }
   .artist-details hr {
-    margin: 10px 20px 10px 0px; }
+    margin: 10px 20px 10px 0px;
+    max-width: 400px; }
   .artist-details .puzzle-prompt {
     position: relative;
-    max-width: 450px; }
+    max-height: 95vh; }
     .artist-details .puzzle-prompt img {
-      display: block; }
+      display: block;
+      max-height: 95vh; }
     .artist-details .puzzle-prompt .img-overlay {
       position: absolute;
       top: 0;

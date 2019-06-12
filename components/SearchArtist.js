@@ -15,10 +15,10 @@ function ReturnArtists(props) {
     if(props.browsingArtist) {
         returnItem = (
             <BrowserRouter>
-                <h3 id="return"><Link to='/artist' onClick={() => props.toggleBrowsing()}>Return to search results</Link></h3>
+                <h3 id="return"><Link to='/rijks/search-artist' onClick={() => props.toggleBrowsing()}>Return to search results</Link></h3>
 
                 <Route 
-                    path='/artist/:artistID' 
+                    path='/rijks/view' 
                     render={(prop) => (
                         <ArtistDetails 
                             artistID={props.artistID}
@@ -34,7 +34,7 @@ function ReturnArtists(props) {
                     year = item.longTitle.slice(-4),
                     <li key={item.id}>
                         <BrowserRouter>
-                            <Link to='/artist/:artistID' onClick={() => props.toggleBrowsing(item.principalOrFirstMaker, item.objectNumber)}>
+                            <Link to='/rijks/view' onClick={() => props.toggleBrowsing(item.principalOrFirstMaker, item.objectNumber)}>
                                 <img alt={item.longTitle} src={item.headerImage.url}/>
                                 <h2><i>{item.principalOrFirstMaker}</i></h2>
                                 <h4>{item.title}</h4>
@@ -136,20 +136,33 @@ class SearchArtist extends React.Component {
         if (error) {
             returnItem = ( <div>Please refresh. Error: {error.message}</div> )
         } else if (isLoaded) {
-            returnItem = (
-                <div className='artist-handler'>
-                    <SearchFunction 
-                        value={ this.state.input }
-                        onChange={ this.updateInput }
-                        onSubmit={ this.handleSubmit }
-                    />
-                    <ReturnArtists 
-                        list={ items }
-                        toggleBrowsing={ this.toggleBrowsing }
-                        browsingArtist={ browsingArtist }
-                        artistID={ artistID }
-                    />
-                </div>
+            browsingArtist ? (
+                returnItem = (
+                    <div className='artist-handler'>
+                        <ReturnArtists 
+                            list={ items }
+                            toggleBrowsing={ this.toggleBrowsing }
+                            browsingArtist={ browsingArtist }
+                            artistID={ artistID }
+                        />
+                    </div>
+                )
+            ) : (
+                returnItem = (
+                    <div className='artist-handler'>
+                        <SearchFunction 
+                            value={ this.state.input }
+                            onChange={ this.updateInput }
+                            onSubmit={ this.handleSubmit }
+                        />
+                        <ReturnArtists 
+                            list={ items }
+                            toggleBrowsing={ this.toggleBrowsing }
+                            browsingArtist={ browsingArtist }
+                            artistID={ artistID }
+                        />
+                    </div>
+                )
             )
         } else if (currentLoading) {
             returnItem = (
